@@ -1,4 +1,17 @@
+import { useState } from "react";
+
+const EMAIL = "belaniaagam15@gmail.com";
+
 function SocialLinks() {
+  const [copied, setCopied] = useState(false);
+
+  function handleEmailClick() {
+    navigator.clipboard?.writeText(EMAIL).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(() => {});
+  }
+
   return (
     <div className="social-links">
       <a
@@ -27,10 +40,14 @@ function SocialLinks() {
       </a>
       <a
         className="social-link"
-        href="mailto:belaniaagam15@gmail.com"
-        aria-label="Email"
-        title="Email"
+        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleEmailClick}
+        aria-label={`Email ${EMAIL}`}
+        title={EMAIL}
       >
+        {copied && <span className="social-toast" role="status">Email copied!</span>}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <rect x="2.5" y="4.5" width="19" height="15" rx="2.3" />
           <path d="M3.5 6.2 12 12.8l8.5-6.6" />
